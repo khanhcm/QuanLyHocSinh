@@ -25,7 +25,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import static javax.swing.SwingUtilities.invokeLater;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 
@@ -69,12 +68,13 @@ public class MainForm extends JFrame{
             public void run() {
                 try {
                     for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                    if ("Nimbus".equals(info.getName())) {
-                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                        break;
-                }
-            }
-                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+                        if ("Nimbus".equals(info.getName())) {
+                            javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                            break;
+                        }
+                    }
+                } 
+                catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                     ex.printStackTrace();
                 }
                 MainForm mainForm = new MainForm();
@@ -103,11 +103,11 @@ public class MainForm extends JFrame{
         btnBCHocKy = new JButton();
         
         
-        
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("QUẢN LÝ HỌC SINH");
         setForeground(java.awt.Color.LIGHT_GRAY);
         setIconImages(null);
+        //setResizable(false);
         
         
         
@@ -188,13 +188,14 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(frmNhapDiem == null || frmNhapDiem.isClosed()){
+                    tabbedPaneMain.addTab("Nhập điểm môn học", panelMain);
                     InitFrameInternal(new FormNhapDiem());
                 }
             }
         });
         
         btnBcMonHoc.setIcon(new ImageIcon("DataIcon/monhoc.png"));
-        btnBcMonHoc.setText("<html>"+"Báo cáo kết quả "+"<br>"+"môn học"+"</html>");
+        btnBcMonHoc.setText("<html>"+"BC kết quả "+"<br>"+"môn học"+"</html>");
         btnBcMonHoc.addActionListener(new ActionListener() {
 
             @Override
@@ -204,7 +205,7 @@ public class MainForm extends JFrame{
         });
         
         btnBCHocKy.setIcon(new ImageIcon("DataIcon/namhoc.png"));
-        btnBCHocKy.setText("<html>"+"Báo cáo kết quả "+"<br>"+"học kỳ"+"</html>");
+        btnBCHocKy.setText("<html>"+"BC kết quả "+"<br>"+"học kỳ"+"</html>");
         btnBCHocKy.addActionListener(new ActionListener() {
 
             @Override
@@ -320,25 +321,25 @@ public class MainForm extends JFrame{
         
         layout.setHorizontalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(tabbedPane, 100, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelMain, 668, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 120, Short.MAX_VALUE)
+                .addComponent(tabbedPaneMain, GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
             )
         );
         
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(tabbedPane, 100, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 120, Short.MAX_VALUE)
             )
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(panelMain, 668, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tabbedPaneMain, GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
             )
         );
         pack();
     }
+    
     private void InitFrameInternal(JInternalFrame jInternalFrame)
     {         
         panelMain.add(jInternalFrame);
-
         try {
             jInternalFrame.setMaximum(true);
         } 
