@@ -12,10 +12,16 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import static javax.swing.SwingUtilities.invokeLater;
@@ -32,6 +38,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class MainForm extends JFrame{
     
     private JTabbedPane tabbedPane;
+    private JTabbedPane tabbedPaneMain;
     private JPanel panelHoSo;
     private JPanel panelHocTap;
     private JPanel panelMain;
@@ -45,6 +52,8 @@ public class MainForm extends JFrame{
     private JButton btnNhapDiem;
     private JButton btnBcMonHoc;
     private JButton btnBCHocKy;
+    private FormNhapDiem frmNhapDiem;
+    
     
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
@@ -59,10 +68,12 @@ public class MainForm extends JFrame{
             @Override
             public void run() {
                 try {
-                    UIManager.setLookAndFeel(
-                                  "com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-                                //  "com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-                                //UIManager.getCrossPlatformLookAndFeelClassName());
+                    for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                }
+            }
                 } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                     ex.printStackTrace();
                 }
@@ -76,6 +87,7 @@ public class MainForm extends JFrame{
 
     private void initComponents() {
         tabbedPane = new JTabbedPane();
+        tabbedPaneMain = new JTabbedPane();
         panelHoSo = new JPanel();
         panelHocTap = new JPanel();
         panelMain = new JPanel();
@@ -101,34 +113,105 @@ public class MainForm extends JFrame{
         
         btnKtNamHoc.setIcon(new ImageIcon("DataIcon/khoahoc.png"));
         btnKtNamHoc.setText("<html>"+"Khởi tạo "+"<br>"+"năm học"+"</html>");
+        btnKtNamHoc.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         
         btnDsLopHoc.setIcon(new ImageIcon("DataIcon/dshocsinh.png"));
         btnDsLopHoc.setText("<html>"+"Danh sách "+"<br>"+"lớp học"+"</html>");
+        btnDsLopHoc.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
                   
         btnHsGiaoVien.setIcon(new ImageIcon("DataIcon/dsgiaovien.png"));
         btnHsGiaoVien.setText("<html>"+"Hồ sơ "+"<br>"+"giáo viên"+"</html>");
+        btnHsGiaoVien.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         
         btnSuaQuyDinh.setIcon(new ImageIcon("DataIcon/qdsiso.png"));
         btnSuaQuyDinh.setText("<html>"+"Sửa đổi "+"<br>"+"quy định"+"</html>");
+        btnSuaQuyDinh.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         
         btnTiepNhanHs.setIcon(new ImageIcon("DataIcon/hocsinh.png"));
         btnTiepNhanHs.setText("<html>"+"Tiếp nhận "+"<br>"+"học sinh"+"</html>");
+        btnTiepNhanHs.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         
         btnTraCuuHs.setIcon(new ImageIcon("DataIcon/tracuuhocsinh.png"));
         btnTraCuuHs.setText("<html>"+"Tra cứu "+"<br>"+"học sinh"+"</html>");
+        btnTraCuuHs.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         
         btnPhanLopHs.setIcon(new ImageIcon("DataIcon/phanlop.png"));
         btnPhanLopHs.setText("<html>"+"Phân lớp "+"<br>"+"học sinh"+"</html>");
+        btnPhanLopHs.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         
         btnNhapDiem.setIcon(new ImageIcon("DataIcon/hocluc.png"));
         btnNhapDiem.setText("<html>"+"Nhập điểm "+"<br>"+"môn học"+"</html>");
+        btnNhapDiem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(frmNhapDiem == null || frmNhapDiem.isClosed()){
+                    InitFrameInternal(new FormNhapDiem());
+                }
+            }
+        });
         
         btnBcMonHoc.setIcon(new ImageIcon("DataIcon/monhoc.png"));
         btnBcMonHoc.setText("<html>"+"Báo cáo kết quả "+"<br>"+"môn học"+"</html>");
+        btnBcMonHoc.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         
         btnBCHocKy.setIcon(new ImageIcon("DataIcon/namhoc.png"));
         btnBCHocKy.setText("<html>"+"Báo cáo kết quả "+"<br>"+"học kỳ"+"</html>");
-        
+        btnBCHocKy.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         
         
         if(RIGHT_TO_LEFT){
@@ -226,6 +309,7 @@ public class MainForm extends JFrame{
         
         
         tabbedPane.addTab("Quản lý học tập", panelHocTap);
+        
         //Use GroupLayout to manage main form
         
         Container contentPane = this.getContentPane();
@@ -251,7 +335,19 @@ public class MainForm extends JFrame{
         );
         pack();
     }
+    private void InitFrameInternal(JInternalFrame jInternalFrame)
+    {         
+        panelMain.add(jInternalFrame);
 
+        try {
+            jInternalFrame.setMaximum(true);
+        } 
+        catch (PropertyVetoException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        jInternalFrame.show();
+    }
     
 }
 
