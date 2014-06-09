@@ -10,6 +10,7 @@ import static java.lang.System.out;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -65,22 +66,22 @@ public class DataConnector {
         return rs;
     }
     
-    public ResultSet ExecuteQuery(String nameSR, int para, Object [] line) {
-        Connection conn = getConnection();        
-        String sql = "{call " + nameSR + "}";
-        CallableStatement cs;
-        ResultSet rs = null;
-        try {
-              cs = conn.prepareCall(sql);
-              for (int i = 1; i <= para; i++) {
-                  cs.setObject(i, line[i]);
-              }
-              rs = cs.executeQuery();                    
-        }
-        catch (SQLException ex) {
-              Logger.getLogger(DataConnector.class.getName()).log(Level.SEVERE, null, ex);
-          }
-        return rs;
+    public ResultSet ExecuteQuery(String nameSR, int para, Object[] line) { 
+            Connection conn = getConnection();
+            String sql = "{call " + nameSR + "}"; 
+            PreparedStatement preparedStatement = null; 
+            ResultSet rs = null; 
+            try { 
+                preparedStatement = conn.prepareStatement(sql); 
+                for (int i = 1; i <= para; i++) { 
+                    preparedStatement.setObject(i, (Object)line[i - 1]); 
+                } 
+                rs = preparedStatement.executeQuery(); 
+            } 
+            catch (SQLException ex) { 
+                Logger.getLogger(DataConnector.class.getName()).log(Level.SEVERE, null, ex); 
+            } 
+        return rs; 
     }
     
     
