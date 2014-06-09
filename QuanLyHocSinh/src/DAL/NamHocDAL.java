@@ -6,16 +6,22 @@
 
 package DAL;
 
+import DTO.NamHocDTO;
+import java.sql.ResultSet;
+
 /**
  *
  * @author evilz
  */
-public class BangDiemDAL {
+public class NamHocDAL {
     private DataConnector con;
     
-    public BangDiemDAL(){
+    public NamHocDAL(){
         con = new DataConnector();
     }
     
-    
+    public ResultSet LayDanhSachNamHoc()
+    {
+        return con.ExecuteQuery("laydanhsachnamhoc");
+    }
 }

@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class DataConnector {
     private static final String driverName = "com.mysql.jdbc.Driver";
-    private static final String urlConnection = "jdbc:mysql://localhost:3306/test";
+    private static final String urlConnection = "jdbc:mysql://localhost:3306/qlhs";
     private static final String user = "root";
     private static final String password = "";
     private static Connection connection = null;

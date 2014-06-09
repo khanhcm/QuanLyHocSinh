@@ -6,12 +6,18 @@
 
 package GUI;
 
+import BLL.HocKyBLL;
+import BLL.NamHocBLL;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.beans.PropertyVetoException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -46,6 +52,8 @@ public class FormNhapDiem extends JInternalFrame{
     private JPanel panel2;
     private JPanel panel3;
     private JPanel panel4;
+    private JTable tableLop;
+    private JTable tableBangDiem;
     
     
     final static boolean shouldFill = true;
@@ -71,6 +79,8 @@ public class FormNhapDiem extends JInternalFrame{
         lblHocky1 = new JLabel();
         lblGvcn = new JLabel("GVCN: ");
         lblGvcn1 = new JLabel();
+        tableLop = new JTable(10,1);
+        tableBangDiem = new JTable(10,10);
         
         
         cbbNamHoc = new JComboBox();
@@ -165,7 +175,9 @@ public class FormNhapDiem extends JInternalFrame{
                 .addComponent(lblGvcn1)
             )
         );
-        
+        //Panel 3 & 4
+        panel3.add(tableLop);
+        panel4.add(tableBangDiem);
         
         
         
@@ -213,6 +225,32 @@ public class FormNhapDiem extends JInternalFrame{
         c.gridx = 1;
         c.gridy = 1;
         contentPane.add(panel4, c);
+        
+        
+        //Xử lý các thành phần trong form
+        //Combobox NamHoc
+        NamHocBLL nam = new NamHocBLL();
+        ResultSet rsNamHoc = nam.LayDanhSachNamHoc();
+        try {
+            while(rsNamHoc.next()){
+                cbbNamHoc.addItem(rsNamHoc.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormNhapDiem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //Combobox Hocky
+        HocKyBLL hocky = new HocKyBLL();
+        if(cbbNamHoc.getSelectedItem().toString()!=""){
+            ResultSet rsHocKy = hocky.layDanhSachHocKy(cbbNamHoc.getSelectedItem().toString());
+            try {
+                while(rsHocKy.next()){
+                    cbbHocKy.addItem(rsHocKy.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FormNhapDiem.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
         pack();
     }
