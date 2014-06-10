@@ -6,7 +6,10 @@
 
 package GUI;
 
+import BLL.GiaoVienBLL;
 import BLL.HocKyBLL;
+import BLL.LopBLL;
+import BLL.MonHocBLL;
 import BLL.NamHocBLL;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
@@ -24,7 +27,12 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -54,7 +62,10 @@ public class FormNhapDiem extends JInternalFrame{
     private JPanel panel4;
     private JTable tableLop;
     private JTable tableBangDiem;
-    
+    private OtherMethod method;
+    String[] lopColumnsName = new String[]{"Tên lớp"};
+    String[] bangDiemColumsName = new String[]{"Mã HS","Họ tên","Điểm 15p 1","Điểm 15p 2",
+        "Điểm 15p 3", "Điểm 1 tiết 1", "Điểm 1 tiết 2", "Điểm Thi", "Điểm TB" };
     
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
@@ -71,7 +82,7 @@ public class FormNhapDiem extends JInternalFrame{
         lblMonHoc = new JLabel("Môn học: ");
         lblNamHoc2 = new JLabel("Năm học: ");
         lblHocKy2 = new JLabel("Học kỳ: ");
-        lblBangDiem = new JLabel("BẢNG ĐIỂM MÔN HỌC ");
+        lblBangDiem = new JLabel("<html><h3>"+"BẢNG ĐIỂM MÔN HỌC "+"</h3></html>");
         lblLop = new JLabel("Lớp: ");
         lblMonhoc1 = new JLabel();
         lblNamHoc1 = new JLabel();
@@ -79,8 +90,30 @@ public class FormNhapDiem extends JInternalFrame{
         lblHocky1 = new JLabel();
         lblGvcn = new JLabel("GVCN: ");
         lblGvcn1 = new JLabel();
-        tableLop = new JTable(10,1);
-        tableBangDiem = new JTable(10,10);
+        
+        tableLop = new JTable();
+        tableLop.setModel(new DefaultTableModel(
+            new Object[][]{
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            lopColumnsName
+        ));
+        tableBangDiem = new JTable();
+        tableBangDiem.setModel(new DefaultTableModel(
+            new Object[][]{
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null}
+            },
+            bangDiemColumsName
+        ));
+        
         
         
         cbbNamHoc = new JComboBox();
@@ -141,15 +174,20 @@ public class FormNhapDiem extends JInternalFrame{
         layout.setHorizontalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(lblBangDiem)
-                .addComponent(lblNamHoc2)
-                .addComponent(lblNamHoc1)
-                .addComponent(lblGvcn)
-                .addComponent(lblGvcn1)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(lblNamHoc2)
+                    .addComponent(lblNamHoc1)
+                )
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(lblGvcn)
+                    .addComponent(lblGvcn1)
+                )
             )
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(lblMonhoc1)
-                .addComponent(lblLop)
-                .addComponent(lblLop1)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(lblLop)
+                    .addComponent(lblLop1)
+                )
             )
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(lblHocKy2)
@@ -160,7 +198,6 @@ public class FormNhapDiem extends JInternalFrame{
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(lblBangDiem)
-                .addComponent(lblMonhoc1)
             )
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(lblNamHoc2)
@@ -175,9 +212,68 @@ public class FormNhapDiem extends JInternalFrame{
                 .addComponent(lblGvcn1)
             )
         );
+        //Event for table lop
+        tableLop.setCellSelectionEnabled(true);
+        ListSelectionModel cellSelectionModel = tableLop.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                String selectedData = null;
+                int[] selectedRow = tableLop.getSelectedRows();
+                int[] selectedColumns = tableLop.getSelectedColumns();
+                
+                for(int i = 0; i< selectedRow.length; i++ ){
+                    for(int j = 0; j < selectedColumns.length; j++){
+                        selectedData = (String)tableLop.getValueAt(selectedRow[i], selectedColumns[j]);
+                    }
+                }
+                
+                //Handling title of form Bang Diem
+                //Label NamHoc 1
+        
+                if(!"".equals(cbbNamHoc.getSelectedItem().toString())){
+                    lblNamHoc1.setText(cbbNamHoc.getSelectedItem().toString());
+                }
+        
+                //Label HocKy 1
+
+                if(!"".equals(cbbHocKy.getSelectedItem().toString())){
+                    lblHocky1.setText(cbbHocKy.getSelectedItem().toString());
+                }
+        
+                //Label BangDiem
+
+                if(!"".equals(cbbMonHoc.getSelectedItem().toString())){
+                    lblBangDiem.setText(String.format("<html><h3>BẢNG ĐIỂM MÔN HỌC %s</h3></html>",
+                            cbbMonHoc.getSelectedItem().toString().toUpperCase()));
+                }
+                
+                //Label Lop
+                if(!"".equals(selectedData)){
+                    lblLop1.setText(selectedData);
+                }
+                
+                //Label GVCN
+                GiaoVienBLL giaovien = new GiaoVienBLL();
+                ResultSet rsGiaovien = giaovien.layGiaoVienTheoLop(selectedData,cbbNamHoc.getSelectedItem().toString());
+                try {
+                    while(rsGiaovien.next())
+                        lblGvcn1.setText(rsGiaovien.getString(1));
+                } catch (SQLException ex) {
+                    Logger.getLogger(FormNhapDiem.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                //Table BangDiem
+                
+            }
+        });
         //Panel 3 & 4
-        panel3.add(tableLop);
-        panel4.add(tableBangDiem);
+        
+        
+        panel3.add(new JScrollPane(tableLop));
+        panel4.add(new JScrollPane(tableBangDiem));
         
         
         
@@ -187,44 +283,32 @@ public class FormNhapDiem extends JInternalFrame{
             contentPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         }
         
-        //Use GridBagLayout to manage panel Quản lý hồ sơ
-        contentPane.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+        layout = new GroupLayout(contentPane);
+        contentPane.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
         
-        if(shouldFill){
-            c.fill = GridBagConstraints.NORTHWEST;
-        }
-        if(shouldWeightX){
-            c.weightx = 0.5;
-        }
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(panel1)
+                .addComponent(panel3)
+            )
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(panel2)
+                .addComponent(panel4)
+            )
+        );
         
-        c.anchor = GridBagConstraints.NORTHWEST;
-        c.weightx = 2;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridheight = 2;
-        c.insets = new Insets(0, 0, 0, 200);
-        contentPane.add(panel1, c);
-        
-        c.anchor = GridBagConstraints.LINE_END;
-        c.gridheight = 1;
-        c.weightx = 0.7;
-        c.gridx = 1;
-        c.gridy = 0;
-        contentPane.add(panel2, c);
-        
-        c.anchor = GridBagConstraints.NORTHWEST;
-        c.weightx = 0.3;
-        c.gridx = 0;
-        c.gridy = 2;
-        contentPane.add(panel3, c);
-        
-        c.anchor = GridBagConstraints.LINE_END;
-        c.weightx = 0.7;
-        c.gridheight = 2;
-        c.gridx = 1;
-        c.gridy = 1;
-        contentPane.add(panel4, c);
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(panel1)
+                .addComponent(panel2)
+            )
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(panel3)
+                .addComponent(panel4)
+            )
+        );
         
         
         //Xử lý các thành phần trong form
@@ -241,7 +325,7 @@ public class FormNhapDiem extends JInternalFrame{
         
         //Combobox Hocky
         HocKyBLL hocky = new HocKyBLL();
-        if(cbbNamHoc.getSelectedItem().toString()!=""){
+        if(!"".equals(cbbNamHoc.getSelectedItem().toString())){
             ResultSet rsHocKy = hocky.layDanhSachHocKy(cbbNamHoc.getSelectedItem().toString());
             try {
                 while(rsHocKy.next()){
@@ -251,6 +335,31 @@ public class FormNhapDiem extends JInternalFrame{
                 Logger.getLogger(FormNhapDiem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        //Combobox MonHoc
+        MonHocBLL monhoc = new MonHocBLL();
+        if(!"".equals(cbbNamHoc.getSelectedItem().toString())){
+            ResultSet rsMonHoc = monhoc.layMonHocTheoNam(cbbNamHoc.getSelectedItem().toString());
+            try {
+                while(rsMonHoc.next()){
+                    cbbMonHoc.addItem(rsMonHoc.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FormNhapDiem.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        //Table Lop
+        if(!"".equals(cbbNamHoc.getSelectedItem().toString())){
+            LopBLL lop = new LopBLL();
+            ResultSet rsLop = lop.LayDanhSachLopTheoNam(cbbNamHoc.getSelectedItem().toString());
+            try {
+                method.updateTableWithNonEditable(tableLop, rsLop, lopColumnsName);
+            } catch (SQLException ex) {
+                Logger.getLogger(FormNhapDiem.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         
         pack();
     }

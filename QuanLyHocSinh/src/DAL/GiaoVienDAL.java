@@ -12,17 +12,18 @@ import java.sql.ResultSet;
  *
  * @author evilz
  */
-public class HocKyDAL {
+public class GiaoVienDAL {
     private DataConnector con;
     
-    public HocKyDAL(){
+    public GiaoVienDAL(){
         con = new DataConnector();
     }
     
-    public ResultSet layDanhSachHocKy(String tenNamHoc){
-        int parameter = 1;
+    public ResultSet layGiaoVienTheoLop(String tenLop, String tenNamHoc){
+        int parameter = 2;
         Object[] value = new Object[parameter];
-        value[0] = tenNamHoc;
-        return con.ExecuteQuery("layHocKyTheoNamHoc(?)", parameter, value);
+        value[0] = tenLop;
+        value[1] = tenNamHoc;
+        return con.ExecuteQuery("LayGVCNTheoLop(?,?)", parameter, value);
     }
 }
