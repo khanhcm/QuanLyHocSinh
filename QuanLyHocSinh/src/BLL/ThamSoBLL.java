@@ -4,23 +4,26 @@
  * and open the template in the editor.
  */
 
-package DAL;
+package BLL;
 
+import DTO.*;
+import DAL.*;
 import java.sql.ResultSet;
 
 /**
  *
  * @author Cong Ly Nguyen
  */
-public class NamHocDAL {
+public class ThamSoBLL {
+    ThamSoDAL thamsodal;
+    public ThamSoBLL()
+    {
+        thamsodal = new ThamSoDAL();
+    }
     
-    DataConnector dc;
-    public NamHocDAL()
+    public ResultSet LayThamSo(ThamSoDTO thamsodto)
     {
-        dc = new DataConnector();
+        return thamsodal.LayThamSo(thamsodto);
     }
-    public ResultSet LayDanhSachNamHoc()
-    {
-        return dc.ExecuteQuery("laydanhsachnamhoc");
-    }
+    
 }

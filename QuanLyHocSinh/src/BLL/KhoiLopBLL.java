@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package DAL;
+package BLL;
 
 /**
  *
  * @author Cong Ly Nguyen
  */
-public class HocKyDAL {
+public class KhoiLopBLL {
     
 }

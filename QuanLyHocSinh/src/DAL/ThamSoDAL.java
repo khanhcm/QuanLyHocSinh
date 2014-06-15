@@ -5,22 +5,25 @@
  */
 
 package DAL;
-
+import DTO.*;
 import java.sql.ResultSet;
-
 /**
  *
  * @author Cong Ly Nguyen
  */
-public class NamHocDAL {
-    
+public class ThamSoDAL {
     DataConnector dc;
-    public NamHocDAL()
+    
+    public ThamSoDAL()
     {
         dc = new DataConnector();
     }
-    public ResultSet LayDanhSachNamHoc()
+    
+    public ResultSet LayThamSo(ThamSoDTO thamsodto)
     {
-        return dc.ExecuteQuery("laydanhsachnamhoc");
+        int parameter = 1;
+        Object[]value = new Object[parameter];
+        value[0] = thamsodto.getTenThamSo();
+        return dc.ExecuteQuery("laythamso(?)", parameter, value);
     }
 }

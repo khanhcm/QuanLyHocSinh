@@ -9,19 +9,23 @@ package GUI;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import static javax.swing.SwingUtilities.invokeLater;
@@ -40,7 +44,7 @@ public class MainForm extends JFrame{
     private JTabbedPane tabbedPaneMain;
     private JPanel panelHoSo;
     private JPanel panelHocTap;
-    private JPanel panelMain;
+    private JDesktopPane panelMain;
     private JButton btnKtNamHoc;
     private JButton btnDsLopHoc;
     private JButton btnHsGiaoVien;
@@ -52,12 +56,12 @@ public class MainForm extends JFrame{
     private JButton btnBcMonHoc;
     private JButton btnBCHocKy;
     private FormNhapDiem frmNhapDiem;
-    
+    private FormTraCuuHocSinh frmTraCuuHocSinh;
+    private FormXepLop frmXepLop;
     
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    
     public MainForm(){
         initComponents();
     }
@@ -90,7 +94,7 @@ public class MainForm extends JFrame{
         tabbedPaneMain = new JTabbedPane();
         panelHoSo = new JPanel();
         panelHocTap = new JPanel();
-        panelMain = new JPanel();
+        panelMain = new JDesktopPane();
         btnKtNamHoc = new JButton();
         btnDsLopHoc = new JButton();
         btnHsGiaoVien = new JButton();
@@ -102,14 +106,11 @@ public class MainForm extends JFrame{
         btnBcMonHoc = new JButton();
         btnBCHocKy = new JButton();
         
-        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("QUẢN LÝ HỌC SINH");
         setForeground(java.awt.Color.LIGHT_GRAY);
         setIconImages(null);
         //setResizable(false);
-        
-        
         
         btnKtNamHoc.setIcon(new ImageIcon("DataIcon/khoahoc.png"));
         btnKtNamHoc.setText("<html>"+"Khởi tạo "+"<br>"+"năm học"+"</html>");
@@ -144,7 +145,6 @@ public class MainForm extends JFrame{
         btnSuaQuyDinh.setIcon(new ImageIcon("DataIcon/qdsiso.png"));
         btnSuaQuyDinh.setText("<html>"+"Sửa đổi "+"<br>"+"quy định"+"</html>");
         btnSuaQuyDinh.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -164,27 +164,33 @@ public class MainForm extends JFrame{
         btnTraCuuHs.setIcon(new ImageIcon("DataIcon/tracuuhocsinh.png"));
         btnTraCuuHs.setText("<html>"+"Tra cứu "+"<br>"+"học sinh"+"</html>");
         btnTraCuuHs.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                if( frmTraCuuHocSinh == null || frmTraCuuHocSinh.isClosed()){
+                    tabbedPaneMain.addTab("Nhập điểm môn học", panelMain);
+                    InitFrameInternal(new FormTraCuuHocSinh());
+                }
             }
         });
         
         btnPhanLopHs.setIcon(new ImageIcon("DataIcon/phanlop.png"));
         btnPhanLopHs.setText("<html>"+"Phân lớp "+"<br>"+"học sinh"+"</html>");
         btnPhanLopHs.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                if(frmXepLop == null|| frmXepLop.isClosed())
+                    tabbedPaneMain.addTab("Xếp Lớp Cho Học Sinh", panelMain);
+                try {
+                    InitFrameInternal(new FormXepLop());
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         
         btnNhapDiem.setIcon(new ImageIcon("DataIcon/hocluc.png"));
         btnNhapDiem.setText("<html>"+"Nhập điểm "+"<br>"+"môn học"+"</html>");
         btnNhapDiem.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(frmNhapDiem == null || frmNhapDiem.isClosed()){
@@ -207,7 +213,6 @@ public class MainForm extends JFrame{
         btnBCHocKy.setIcon(new ImageIcon("DataIcon/namhoc.png"));
         btnBCHocKy.setText("<html>"+"BC kết quả "+"<br>"+"học kỳ"+"</html>");
         btnBCHocKy.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -321,8 +326,9 @@ public class MainForm extends JFrame{
         
         layout.setHorizontalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 120, Short.MAX_VALUE)
-                .addComponent(tabbedPaneMain, GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(tabbedPaneMain,GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 120, Short.MAX_VALUE)
+                //.addComponent(contentPane, GroupLayout.Alignment.LEADING, WIDTH, WIDTH, WIDTH)
             )
         );
         
@@ -331,7 +337,7 @@ public class MainForm extends JFrame{
                 .addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 120, Short.MAX_VALUE)
             )
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(tabbedPaneMain, GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(tabbedPaneMain,GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
             )
         );
         pack();

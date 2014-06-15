@@ -6,24 +6,10 @@
 
 package BLL;
 
-import DAL.HocKyDAL;
-import java.sql.ResultSet;
-
 /**
  *
- * @author evilz
+ * @author Cong Ly Nguyen
  */
 public class HocKyBLL {
-    
-    HocKyDAL hocKyDAL;
-
-    public HocKyBLL() {
-        hocKyDAL = new HocKyDAL();
-    }
-    
-    public ResultSet layDanhSachHocKy(String tenNamHoc){
-        return hocKyDAL.layDanhSachHocKy(tenNamHoc);
-    }
-    
     
 }

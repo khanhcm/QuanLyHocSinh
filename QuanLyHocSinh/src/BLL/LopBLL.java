@@ -5,16 +5,15 @@
  */
 
 package BLL;
-
-import DAL.LopDAL;
+import DAL.*;
+import DTO.*;
 import java.sql.ResultSet;
-
 /**
  *
- * @author evilz
+ * @author Cong Ly Nguyen
  */
 public class LopBLL {
-     LopDAL lopdal;
+    LopDAL lopdal;
     
     public LopBLL()
     {
@@ -24,8 +23,29 @@ public class LopBLL {
     {
         return lopdal.LayDanhSachTatCaLop();
     }
-    public ResultSet LayDanhSachLopTheoNam(String tenNamHoc)
+    public ResultSet LayDanhSachLopTheoNam(LopDTO lopdto)
     {
-        return lopdal.LayDanhSachLopTheoNam(tenNamHoc);
+        return lopdal.LayDanhSachLopTheoNam(lopdto);
+    }
+   
+    public ResultSet LaySiSo(LopDTO lopdto)
+    {
+        return lopdal.LaySiSo(lopdto);
+    }
+    
+    public ResultSet GiamSiSo(LopDTO lopdto)
+    {
+        return lopdal.GiamSiSo(lopdto);
+    }
+    
+    public ResultSet TangSiSo(LopDTO lopdto)
+    {
+        return lopdal.TangSiSo(lopdto);
+    }
+    
+    public ResultSet LayMaLop(LopDTO lopdto)
+    {
+        return lopdal.LayMaLop(lopdto);
+        
     }
 }

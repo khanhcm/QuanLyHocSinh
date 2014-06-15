@@ -10,15 +10,18 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author evilz
+ * @author Cong Ly Nguyen
  */
 public class OtherMethod {
+    
     public static void updateComboBox(JComboBox cbb,ResultSet rs) throws SQLException
     {
         cbb.removeAllItems();
@@ -28,7 +31,7 @@ public class OtherMethod {
         }
     }
     
-    public static void updateTableWithNonEditable(JTable table, ResultSet rs, String[] columnNames) throws SQLException
+    public static void updateTable(JTable table, ResultSet rs, String[] columnNames) throws SQLException
     {
         Vector column = new Vector();
         Vector data = new Vector();
@@ -46,13 +49,7 @@ public class OtherMethod {
             }
             data.addElement(row);
         }
-        table.setModel(new DefaultTableModel(data, column){
-            private static final long serialVersionUID = 1L;
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        });        
+        table.setModel(new DefaultTableModel(data, column));        
     }
     
     public static void removeRow(JTable table, int k)
@@ -90,5 +87,43 @@ public class OtherMethod {
         }
         data.addElement(rowData);
         table.setModel(new DefaultTableModel(data, columnName));
+    }
+    
+    public static int getInt(ResultSet rs)
+    {
+        int result = 0;
+        try {
+            while (rs.next()) {
+                result = Integer.parseInt(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormXepLop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public static String getString(ResultSet rs)
+    {
+        String result = "";
+        try {
+            while (rs.next()) {
+                result = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormXepLop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public static void clearTable(JTable tbl, String[] columnNames)
+    {
+        Vector column = new Vector();
+        Vector data = new Vector();
+        data.removeAllElements();
+        int columns = columnNames.length;
+        for (int i = 0; i < columnNames.length; i++) {
+            column.addElement(columnNames[i]);
+        }
+        tbl.setModel(new DefaultTableModel(data, column)); 
     }
 }

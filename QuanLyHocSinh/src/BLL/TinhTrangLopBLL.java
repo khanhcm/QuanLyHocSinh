@@ -5,22 +5,22 @@
  */
 
 package BLL;
-import DAL.*;
-import DTO.*;
+
 import java.sql.ResultSet;
+import DTO.*;
+import DAL.*;
 /**
  *
  * @author Cong Ly Nguyen
  */
-public class NamHocBLL {
-    NamHocDAL namhocdal;
-    
-    public NamHocBLL()
+public class TinhTrangLopBLL {
+    TinhTrangLopDAL tinhtranglopdal;
+    public TinhTrangLopBLL()
     {
-        namhocdal = new NamHocDAL();
+        tinhtranglopdal = new TinhTrangLopDAL();
     }
-    public ResultSet LayDanhSachNamHoc()
+    public ResultSet LayMaTT(TinhTrangLopDTO tinhtranglopdto)
     {
-        return namhocdal.LayDanhSachNamHoc();
+        return tinhtranglopdal.LayMaTT(tinhtranglopdto);
     }
 }

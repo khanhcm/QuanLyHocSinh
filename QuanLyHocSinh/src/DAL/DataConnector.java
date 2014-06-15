@@ -66,24 +66,23 @@ public class DataConnector {
         return rs;
     }
     
-    public ResultSet ExecuteQuery(String nameSR, int para, Object[] line) { 
-            Connection conn = getConnection();
-            String sql = "{call " + nameSR + "}"; 
-            PreparedStatement preparedStatement = null; 
-            ResultSet rs = null; 
-            try { 
-                preparedStatement = conn.prepareStatement(sql); 
-                for (int i = 1; i <= para; i++) { 
-                    preparedStatement.setObject(i, (Object)line[i - 1]); 
-                } 
-                rs = preparedStatement.executeQuery(); 
-            } 
-            catch (SQLException ex) { 
-                Logger.getLogger(DataConnector.class.getName()).log(Level.SEVERE, null, ex); 
-            } 
-        return rs; 
+    public ResultSet ExecuteQuery(String nameSR, int para, Object[] line) {
+        Connection conn = getConnection();
+        String sql = "{call " + nameSR + "}";
+        PreparedStatement preparedStatement = null; 
+        ResultSet rs = null;
+        try {
+            preparedStatement = conn.prepareStatement(sql);
+            for (int i = 1; i <= para; i++) {
+                preparedStatement.setObject(i, (Object)line[i - 1]);
+            }
+            rs = preparedStatement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataConnector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
     }
-    
+
     
     public CallableStatement getData(String nameSR, int para, Object [] line) {
         Connection conn = getConnection();

@@ -10,6 +10,6 @@ package DAL;
  *
  * @author Cong Ly Nguyen
  */
-public class HocKyDAL {
+public class BangDiemMonHocDAL {
     
 }
