@@ -7,6 +7,7 @@
 package BLL;
 
 import DAL.MonHocDAL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 
 /**
@@ -23,5 +24,9 @@ public class MonHocBLL {
     
     public ResultSet layMonHocTheoNam(String tenNamHoc){
         return monhocdal.layMonHocTheoNam(tenNamHoc);
+    }
+    
+    public Connection getConnection(){
+        return monhocdal.getConnection();
     }
 }

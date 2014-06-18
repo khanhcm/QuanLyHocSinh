@@ -65,4 +65,12 @@ public class LopDAL {
         value[1] = lopdto.getNamHoc();
         return dc.ExecuteQuery("LayMaLop(?,?)", parameter, value);
     }
+    
+    public ResultSet layTenGvcnTuLop(String tenLop, String tenNamHoc){
+        int parameter = 2;
+        Object[]value = new Object[parameter];
+        value[0] = tenLop;
+        value[1] = tenNamHoc;
+        return dc.ExecuteQuery("LayTenGvcnTuLop(?,?)", parameter, value);
+    }
 }

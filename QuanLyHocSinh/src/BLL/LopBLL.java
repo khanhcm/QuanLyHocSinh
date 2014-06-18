@@ -48,4 +48,8 @@ public class LopBLL {
         return lopdal.LayMaLop(lopdto);
         
     }
+    
+    public ResultSet layTenGvcnTuLop(String tenLop, String tenNamHoc){
+        return lopdal.layTenGvcnTuLop(tenLop, tenNamHoc);
+    }
 }

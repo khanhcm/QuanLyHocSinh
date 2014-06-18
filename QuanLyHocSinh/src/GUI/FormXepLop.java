@@ -79,7 +79,6 @@ public class FormXepLop extends JInternalFrame {
     private ChiTietLopBLL chitietlopbll;
     private HocKyBLL hockybll;
     private ThamSoBLL thamsobll;
-    private BangDiemMonHocBLL bangdiemmonhocbll;
 
     private OtherMethod method;
     private String[] columnsName = new String[]{
@@ -98,7 +97,6 @@ public class FormXepLop extends JInternalFrame {
         chitietlopbll = new ChiTietLopBLL();
         hockybll = new HocKyBLL();
         thamsobll = new ThamSoBLL();
-        bangdiemmonhocbll = new BangDiemMonHocBLL();
 
         //xoa het doi tuong, add moi doi tuong vao
         cbbTennamHoc.removeAllItems();

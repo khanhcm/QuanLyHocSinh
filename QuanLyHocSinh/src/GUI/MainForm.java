@@ -58,6 +58,7 @@ public class MainForm extends JFrame{
     private FormNhapDiem frmNhapDiem;
     private FormTraCuuHocSinh frmTraCuuHocSinh;
     private FormXepLop frmXepLop;
+    private FormBCKQMonHoc frmBcKqMonHoc;
     
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
@@ -193,7 +194,7 @@ public class MainForm extends JFrame{
         btnNhapDiem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(frmNhapDiem == null || frmNhapDiem.isClosed()){
+                if(frmNhapDiem == null|| frmNhapDiem.isClosed()){
                     tabbedPaneMain.addTab("Nhập điểm môn học", panelMain);
                     InitFrameInternal(new FormNhapDiem());
                 }
@@ -206,7 +207,10 @@ public class MainForm extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                if(frmBcKqMonHoc == null || frmBcKqMonHoc.isClosed()){
+                    tabbedPaneMain.addTab("Báo cáo kết quả môn học", panelMain);
+                    InitFrameInternal(new FormBCKQMonHoc());
+                }
             }
         });
         

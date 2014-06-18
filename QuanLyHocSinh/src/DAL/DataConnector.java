@@ -24,12 +24,12 @@ import java.util.logging.Logger;
  */
 public class DataConnector {
     private static final String driverName = "com.mysql.jdbc.Driver";
-    private static final String urlConnection = "jdbc:mysql://localhost:3306/qlhs";
+    private static final String urlConnection = "jdbc:mysql://localhost:3306/qlhs?characterEncoding=utf8";
     private static final String user = "root";
     private static final String password = "";
     private static Connection connection = null;
       
-    public Connection getConnection() {
+    public static Connection getConnection() {
         
         try {
             Class.forName(driverName).newInstance();    
@@ -84,20 +84,21 @@ public class DataConnector {
     }
 
     
-    public CallableStatement getData(String nameSR, int para, Object [] line) {
+    public CallableStatement updateData(String nameSR, int para, Object [] line) {
         Connection conn = getConnection();
         String sql = "{call " + nameSR + "}";
         CallableStatement cs = null;        
         try {
               cs = conn.prepareCall(sql);  
               for (int i = 1; i <= para; i++) {
-                  cs.setObject(i, line[i]);
+                  cs.setObject(i, line[i-1]);
               }
               cs.execute();
         }
         catch (SQLException ex) {
               Logger.getLogger(DataConnector.class.getName()).log(Level.SEVERE, null, ex);
-          }
+        }
         return cs;
     }
+    
 }

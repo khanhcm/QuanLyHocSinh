@@ -49,7 +49,33 @@ public class OtherMethod {
             }
             data.addElement(row);
         }
-        table.setModel(new DefaultTableModel(data, column));        
+        table.setModel(new DefaultTableModel(data, column));
+    }
+    public static void updateTableWithNotEditable(JTable table, ResultSet rs, String[] columnNames) throws SQLException
+    {
+        Vector column = new Vector();
+        Vector data = new Vector();
+
+        ResultSetMetaData metaData;
+        metaData = rs.getMetaData();
+        int columns = metaData.getColumnCount();
+        for (int i = 0; i < columnNames.length; i++) {
+            column.addElement(columnNames[i]);
+        }
+        while (rs.next()) {
+            Vector row = new Vector(columns);
+            for (int i = 1; i <= columns; i++) {
+                row.addElement(rs.getObject(i));
+            }
+            data.addElement(row);
+        }
+        table.setModel(new DefaultTableModel(data, column){
+            private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+       }
+        });        
     }
     
     public static void removeRow(JTable table, int k)

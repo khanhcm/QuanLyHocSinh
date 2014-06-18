@@ -6,6 +6,7 @@
 
 package DAL;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 
 /**
@@ -23,6 +24,10 @@ public class MonHocDAL {
         int parameter = 1;
         Object[] value = new Object[parameter];
         value[0] = tenNamHoc;
-        return con.ExecuteQuery("layMonHocTheoNamHoc(?)", parameter, value);
+        return con.ExecuteQuery("LayMonHocTheoNamHoc(?)", parameter, value);
+    }
+    
+    public Connection getConnection(){
+        return con.getConnection();
     }
 }
