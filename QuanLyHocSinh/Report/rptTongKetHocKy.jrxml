@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptTongKetHocKy" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83edebc5-fd41-4a42-9cb4-c1f04d9680d6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="paramNamHoc" class="java.lang.String"/>
+	<parameter name="paramHocKy" class="java.lang.String"/>
+	<parameter name="paraKhoiLop" class="java.lang.String"/>
+	<field name="tenLop" class="java.lang.String"/>
+	<field name="siSo" class="java.lang.String"/>
+	<field name="soLuongDat" class="java.lang.String"/>
+	<field name="tiLe" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="116" y="0" width="358" height="33" uuid="076ad3a4-9f93-4e9b-821b-9ed02cb07791"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[BÁO CÁO KẾT QUẢ HỌC KỲ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="357" y="42" width="100" height="20" uuid="75a50e40-2621-4249-af36-a9aeac695179"/>
+				<textFieldExpression><![CDATA[$P{paramKhoiLop}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="326" y="42" width="31" height="20" uuid="a760a5c0-2d03-48db-8349-d92247eabcb0"/>
+				<text><![CDATA[Khối]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="132" y="42" width="46" height="20" uuid="16f01ba6-ba18-4b14-b03e-5c3022e228cb"/>
+				<text><![CDATA[Năm học ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="245" y="42" width="60" height="20" uuid="5fa1830c-fbf4-46aa-bdec-83dfcc0f642c"/>
+				<textFieldExpression><![CDATA[$P{paramHocKy}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="178" y="42" width="54" height="20" uuid="7accec93-e9a6-402b-8c18-025a27942e3a"/>
+				<textFieldExpression><![CDATA[$P{paramNamHoc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="1c8ecf2b-454f-4c6f-b624-dff8d14b6022"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="11" y="13" width="65" height="22" uuid="89991158-edda-4992-8874-aaa3eb01337b"/>
+				<text><![CDATA[STT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="11" width="109" height="22" uuid="f8c98488-7eaf-46af-8aac-86b45c84960f"/>
+				<text><![CDATA[Tỉ lệ đạt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="12" width="109" height="22" uuid="de46ed02-bac8-48e6-82f9-467ed051a573"/>
+				<text><![CDATA[Số lượng đạt môn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="13" width="109" height="22" uuid="3af5746b-1dbf-4cb6-acbf-930cc86a04d8"/>
+				<text><![CDATA[Sỉ số]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="13" width="109" height="22" uuid="b71d7100-51be-4584-bb9b-781e6431d291"/>
+				<text><![CDATA[Tên lớp]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="21085a90-be46-4467-8af4-b580e53c666f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="11" y="0" width="65" height="20" uuid="9c204a15-b1ca-4f33-b792-4c394a758665"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="1" width="108" height="20" uuid="958c4498-f2d6-4c8c-8ebb-32f1abaaeb6a"/>
+				<textFieldExpression><![CDATA[$F{siSo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="294" y="1" width="107" height="20" uuid="7875676a-ffda-4ae1-b859-4849e29cd1e3"/>
+				<textFieldExpression><![CDATA[$F{soLuongDatMon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="0" width="108" height="20" uuid="7e14377a-79a5-49d2-b9e6-e1ecfff01b6a"/>
+				<textFieldExpression><![CDATA[$F{tiLeDatMon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="0" width="109" height="20" uuid="73d63ad9-5a29-47ce-81db-0d5b38072ff6"/>
+				<textFieldExpression><![CDATA[$F{tenLop}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="976082f5-77e5-437a-89d5-79dacebc9ae6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="3e52c2b9-8b42-4cf5-82ee-817d62d38407"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="928ab880-71b9-4121-9028-dbd9496c8c5b"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="b590fe25-9bc5-455f-b528-615df5a9dc44"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -10,20 +10,14 @@ import BLL.BaoCaoMonHocBLL;
 import BLL.HocKyBLL;
 import BLL.MonHocBLL;
 import BLL.NamHocBLL;
-import DAL.DataConnector;
 import DTO.BaoCaoTongKetMonDTO;
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,31 +31,21 @@ import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.xml.parsers.SAXParser;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.export.JRHtmlExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.util.JRProperties;
-import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
-import org.xml.sax.InputSource;
 
 /**
  *
  * @author EvilZ
  */
-public class FormBCKQMonHoc extends JInternalFrame{
-    private JLabel lblNamhoc;
+public class FormBCKQHocKy  extends JInternalFrame{
+     private JLabel lblNamhoc;
     private JLabel lblHocKy;
     private JLabel lblMonHoc;
     private JLabel lblKhoiLop;
@@ -73,19 +57,17 @@ public class FormBCKQMonHoc extends JInternalFrame{
     private JDesktopPane paneReport;
     
     
-    public FormBCKQMonHoc() {
-        super("Báo cáo kết quả môn học",true,true);
+    public FormBCKQHocKy(){
+        super("Báo cáo kết quả học kỳ",true,true);
         initComponents();
     }
 
     private void initComponents() {
         lblNamhoc = new JLabel("Chọn năm học:");
         lblHocKy = new JLabel("Chọn học kỳ:");
-        lblMonHoc = new JLabel("Chọn môn học:");
         lblKhoiLop = new JLabel("Chọn khối lớp");
         cbbHocKy = new JComboBox();
         cbbNamhoc = new JComboBox();
-        cbbMonHoc = new JComboBox();
         String[] khoi = {"10", "11", "12"};
         cbbKhoiLop = new JComboBox(khoi);
         btnTaoBaoCao = new JButton("Tạo báo cáo");
@@ -96,8 +78,6 @@ public class FormBCKQMonHoc extends JInternalFrame{
         contentPane.add(cbbNamhoc);
         contentPane.add(lblHocKy);
         contentPane.add(cbbHocKy);
-        contentPane.add(lblMonHoc);
-        contentPane.add(cbbMonHoc);
         contentPane.add(lblKhoiLop);
         contentPane.add(cbbKhoiLop);
         contentPane.add(btnTaoBaoCao);
@@ -158,7 +138,6 @@ public class FormBCKQMonHoc extends JInternalFrame{
                     JRDataSource datasource = new JRBeanCollectionDataSource(data, true);
                     parameters.put("paramNamHoc", cbbNamhoc.getSelectedItem().toString());
                     parameters.put("paramHocKy", cbbHocKy.getSelectedItem().toString());
-                    parameters.put("paramMonHoc", cbbMonHoc.getSelectedItem().toString());
                     parameters.put("paramKhoiLop", cbbKhoiLop.getSelectedItem().toString());
                     JasperPrint jasperPrint = JasperFillManager.fillReport(reportStream, parameters, datasource);
                     JasperViewer.viewReport(jasperPrint);
@@ -172,7 +151,5 @@ public class FormBCKQMonHoc extends JInternalFrame{
             }
         });
         pack();
-        
-        
     }
 }

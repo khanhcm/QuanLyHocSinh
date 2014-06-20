@@ -198,7 +198,7 @@ public class FormNhapDiem extends JInternalFrame{
         panel3.add(new JScrollPane(tableLop),c1);
         //panel4
         //table Bang Diem
-        String[] bangdiemColName = {"Mã HS", 
+        final String[] bangdiemColName = {"Mã HS", 
             "Họ tên", 
             "Điểm 15 phút 1", 
             "Điểm 15 phút 2", 
